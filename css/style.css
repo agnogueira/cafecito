@@ -1,0 +1,58 @@
+.block {
+    outline:1px dashed green;
+    float:left;
+    width:100%;
+    display:block;
+    margin-bottom:10px;
+    padding:10px 0px;
+}
+.tile {
+    outline:1px dashed red;
+    display:block;
+    float:left;
+}
+
+.tile-wrapper {
+    padding:10px;
+}
+
+.span1 {
+    width:10%;
+}
+.span2 {
+    width:20%;
+}
+.span3 {
+    width:30%;
+}
+.span4 {
+    width:40%;
+}
+.span5 {
+    width:50%;
+}
+.span6 {
+    width:60%;
+}
+.span7 {
+    width:70%;
+}
+.span8 {
+    width:80%;
+}
+.span9 {
+    width:90%;
+}
+.span10 {
+    width:100%;
+}
+
+
+.tile-photo {
+    height:50px;
+}
+.tile-colection {
+    height:30px;
+}
+
+.ui-resizable-helper { border: 1px dotted #00F; }
