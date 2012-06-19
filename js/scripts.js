@@ -1,5 +1,27 @@
+
+function widthReOrder(children) {
+    var len = children.length;
+    children.each(function(index) {
+    var child = $(this);
+    var new_width = 16;
+    new_width = parseInt(16 / len, 10);
+    var tile_class = child.attr("class");
+    //fix width class
+    var regex_match = tile_class.match(/\bwidth\-(\d+)/);
+    var total_width = regex_match[1];
+    child.removeClass(regex_match[0]);
+    child.addClass("width-" + new_width);
+    //fix position class
+    var regex_match = tile_class.match(/\bposition\-(\d+)/);
+    var total_width = regex_match[1];
+    child.removeClass(regex_match[0]);
+    var position = new_width*index;
+    child.addClass("position-" + position);
+    });
+}
+
 var func_drag = function() {
-    var group = "<div class='row'><div class='group cell position-0 width-16'>GROUP</div></div>";
+    var group = "<div class='group cell position-0 width-16'>GROUP</div>";
     var new_row_tile = "<div class='row'><div class='tile cell position-0 width-16'>TILE</div></div>";
     var existing_row_tile = "<div class='tile cell position-0 width-16'>TILE</div>";
 
@@ -12,32 +34,24 @@ var func_drag = function() {
 
     // instead of '.row .group' we should enable dropping in '#main-wrapper'
     // and then check which element received the drop
-    $(".group .row").droppable({
+    $(".group").droppable({
         drop: function(event, ui) {
             if (ui.draggable.attr("id") == "btn-group") {
-                debugger;
-                $(this).parent(".group").after(group);
+                $(this).after(group);
+                var children = $(this).parent().children(".group");
+                widthReOrder(children);
                 func_drag();
             } else if (ui.draggable.attr("id") == "btn-tile") {
-                debugger;
+                // debugger;
+                var row = $(".row", this);
+                if(row) {
+                    row.append(existing_row_tile);
+                } else {
+                    $(this).append(new_row_tile);
 
-                $(this).append(existing_row_tile);
-                var kids = $(this).children();
-                console.log(kids);
-                var new_width = 16;
-                if (kids.length) {
-                    var new_width = parseInt(16 / kids.length, 10);
                 }
-                $(this).parent().children().each(function (i) {
-                    debugger;
-                    // Adjust width of all children
-                    var tile_class = $(this).attr("class");
-                    var regex_match = tile_class.match(/\bwidth\-(\d+)/);
-                    var total_width = regex_match[1];
-                    $(this).children(".tile")[i].removeClass(regex_match[0]);
-                    $(this).addClass("width-" + new_width);
-
-                });
+                var children = row.children();
+                widthReOrder(children);
             }
             // r.append(tile);
         }
